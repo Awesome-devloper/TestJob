@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TaskSchedulerLib;
 
 /// <summary>
 /// Entry point for the Task Scheduler application.
