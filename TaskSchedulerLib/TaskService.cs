@@ -1,0 +1,56 @@
+using System.Linq.Expressions;
+
+/// <summary>
+/// Interface for task invocation services.
+/// </summary>
+public interface IRunTask
+{
+    /// <summary>
+    /// Invokes a task asynchronously with a specified maximum retry count.
+    /// </summary>
+    /// <param name="taskExpression">Expression representing the task method to invoke.</param>
+    /// <param name="maxRetry">Maximum number of retries allowed (default 10).</param>
+    Task Invoke(Expression<Func<Task>> taskExpression, int maxRetry = 10);
+}
+
+/// <summary>
+/// Service for registering tasks in the database.
+/// Parses expressions to extract type and method information for later execution.
+/// </summary>
+public class TaskService : IRunTask
+{
+    private readonly TaskDbContext _dbContext;
+
+    public TaskService(TaskDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    /// <summary>
+    /// Registers a task by parsing the expression and storing metadata in the database.
+    /// </summary>
+    /// <param name="taskExpression">Expression of the task method.</param>
+    /// <param name="maxRetry">Max retries for the task.</param>
+    public async Task Invoke(Expression<Func<Task>> taskExpression, int maxRetry = 10)
+    {
+        if (taskExpression.Body is not MethodCallExpression methodCall)
+            throw new ArgumentException("Expression must be a method call.");
+
+        var method = methodCall.Method;
+        var declaringType = method.DeclaringType;
+        if (declaringType == null)
+            throw new InvalidOperationException("Method must be declared in a type.");
+
+        var task = new TaskEntity
+        {
+            TaskName = method.Name,
+            HandlerType = declaringType.FullName + ", " + declaringType.Assembly.GetName().Name,
+            MethodName = method.Name,
+            MaxRetry = maxRetry,
+            RetryUntil = DateTime.UtcNow.AddHours(1) // Retry for 1 hour
+        };
+
+        _dbContext.Tasks.Add(task);
+        await _dbContext.SaveChangesAsync();
+    }
+}
