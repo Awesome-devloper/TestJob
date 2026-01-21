@@ -4,6 +4,17 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>TaskSchedulerLib</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Awesome Developer</Authors>
+    <Description>A lightweight, database-driven background task execution system with Hangfire retries.</Description>
+    <PackageTags>task-scheduler background-jobs hangfire sql-server dotnet</PackageTags>
+    <RepositoryUrl>https://github.com/Awesome-devloper/TestJob</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
