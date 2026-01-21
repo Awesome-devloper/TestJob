@@ -1,5 +1,7 @@
 using System.Linq.Expressions;
 
+namespace TaskSchedulerLib.Domain.Interfaces;
+
 /// <summary>
 /// Interface for task invocation services.
 /// </summary>

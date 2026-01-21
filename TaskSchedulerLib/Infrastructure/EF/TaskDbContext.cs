@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TaskSchedulerLib.Domain.Entities;
+
+namespace TaskSchedulerLib.Infrastructure.EF;
 
 public class TaskDbContext : DbContext
 {

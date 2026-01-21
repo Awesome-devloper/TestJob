@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace TaskSchedulerLib.Domain.Entities;
+
 public class TaskEntity
 {
     [Key]

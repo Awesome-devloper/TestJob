@@ -1,4 +1,9 @@
 using System.Linq.Expressions;
+using TaskSchedulerLib.Domain.Entities;
+using TaskSchedulerLib.Domain.Interfaces;
+using TaskSchedulerLib.Infrastructure.EF;
+
+namespace TaskSchedulerLib.Application.Services;
 
 /// <summary>
 /// Service for registering tasks in the database.

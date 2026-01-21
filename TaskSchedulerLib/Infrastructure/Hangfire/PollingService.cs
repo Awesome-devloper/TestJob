@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Hangfire;
+using TaskSchedulerLib.Domain.Entities;
+using TaskSchedulerLib.Domain.Interfaces;
+using TaskSchedulerLib.Infrastructure.EF;
+
+namespace TaskSchedulerLib.Infrastructure.Hangfire;
 
 public class PollingService
 {
@@ -16,7 +21,7 @@ public class PollingService
         var expiredTasks = await _dbContext.Tasks
             .Where(t => t.Status == "Queued" && t.RetryUntil < DateTime.UtcNow && t.RetryCount >= t.MaxRetry)
             .ToListAsync();
-         foreach (var task in expiredTasks)
+        foreach (var task in expiredTasks)
         {
             task.Status = "Failed";
             task.ErrorDetails = "Retry time exceeded and max retries reached";

@@ -1,8 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Hangfire;
 using Hangfire.SqlServer;
+using TaskSchedulerLib.Domain.Interfaces;
+using TaskSchedulerLib.Application.Services;
+using TaskSchedulerLib.Infrastructure.EF;
+using TaskSchedulerLib.Infrastructure.Hangfire;
 
 /// <summary>
 /// Static class for configuring and initializing the Task Scheduler system.

@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TaskSchedulerLib.Domain.Entities;
+using TaskSchedulerLib.Domain.Interfaces;
+using TaskSchedulerLib.Infrastructure.EF;
+
+namespace TaskSchedulerLib.Infrastructure.Hangfire;
 
 public class TaskExecutor : ITaskExecutor
 {
