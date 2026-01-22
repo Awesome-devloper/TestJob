@@ -44,7 +44,8 @@ public static class TaskScheduler
     /// Initializes the system asynchronously: ensures DB is created and sets up recurring polling.
     /// </summary>
     /// <param name="serviceProvider">The service provider for resolving dependencies.</param>
-    public static async Task InitializeAsync(IServiceProvider serviceProvider)
+    /// <param name="cronExpression">Cron expression for polling interval (default: every second).</param>
+    public static async Task InitializeAsync(IServiceProvider serviceProvider, string cronExpression = "* * * * * *")
     {
         // Ensure DB is created
         using var scope = serviceProvider.CreateScope();
@@ -53,6 +54,6 @@ public static class TaskScheduler
 
         // Start initial polling using service-based API for Hangfire
         var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
-        recurringJobManager.AddOrUpdate<PollingService>("poll-job", ps => ps.Poll(), "* * * * * *");
+        recurringJobManager.AddOrUpdate<PollingService>("poll-job", ps => ps.Poll(), cronExpression);
     }
 }

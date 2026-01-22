@@ -23,7 +23,7 @@ TaskScheduler.ConfigureServices(builder.Services, builder.Configuration);
 var host = builder.Build();
 
 // Initialize using the library (DB creation and polling setup)
-await TaskScheduler.InitializeAsync(host.Services);
+await TaskScheduler.InitializeAsync(host.Services, "*/10 * * * * *"); // Poll every 10 seconds
 
 // Example usage: Register and execute a task with retries
 using (var scope = host.Services.CreateScope())
